@@ -1,6 +1,6 @@
 import { useState, FormEvent, FC } from 'react'
 import { ShieldCheckIcon } from '@heroicons/react/solid'
-import { useMutateAuth } from '../../hooks/useMutateAuth'
+import { useMutateAuth } from '../../hooks/auth/useMutateAuth'
 
 export const Auth: FC = () => {
   const [isLogin, setIsLogin] = useState(true)
