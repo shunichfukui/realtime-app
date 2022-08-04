@@ -1,6 +1,6 @@
 import { Session } from "@supabase/supabase-js"
 import create from "zustand"
-import { EditedProfile } from "../types"
+import { EditedNotice, EditedProfile } from "../types"
 
 type State = {
   session: Session | null
@@ -8,6 +8,9 @@ type State = {
   editedProfile: EditedProfile
   updateEditedProfile: (payload: EditedProfile) => void
   resetEditedProfile: () => void
+  editedNotice: EditedNotice
+  updateEditedNotice: (payload: EditedNotice) => void
+  resetEditedNotice: () => void
 }
 
 const useStore = create<State>((set) => ({
@@ -23,6 +26,18 @@ const useStore = create<State>((set) => ({
   }),
   resetEditedProfile: () =>
     set({ editedProfile: { username: '', favorites: '', avatar_url: '' } }),
+    
+    // 通知関係
+  editedNotice: { id: '', content: '' },
+  updateEditedNotice: (payload) =>
+  set({
+    editedNotice: {
+      id: payload.id,
+      content: payload.content,
+    }
+  }),
+  resetEditedNotice: () =>
+    set({ editedNotice: { id: '', content: '' } }),
 }))
 
 export default useStore
