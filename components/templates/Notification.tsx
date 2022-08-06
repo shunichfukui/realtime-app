@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { useQueryNotices } from "../../hooks/notice/useQueryNotices"
 import { useSubscribeNotices } from "../../hooks/notice/useSubscribeNotices"
-import { NoticeForm } from "../atoms/NoticeForm"
+import { NoticeForm } from "../molecules/NoticeForm"
 import { NoticeItem } from "../atoms/NoticeItem"
 
 export const Notification: FC = () => {
