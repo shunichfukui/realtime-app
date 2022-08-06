@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useQueryPosts } from '../../hooks/post/useQueryPosts'
 import { useSubscribePosts } from '../../hooks/post/useSubscribePosts'
 import { Post } from '../../types'
-import { PostItem } from '../atoms/PostItem'
+import { PostItem } from '../molecules/PostItem'
 import { PostForm } from '../molecules/PostForm'
 
 export const Feed: FC = () => {
@@ -11,7 +11,7 @@ export const Feed: FC = () => {
   
   return (
     <>
-      <p className="mb-4 text-center">スレッド</p>
+      <p className="mb-4 text-center">投稿</p>
       <PostForm />
       <ul data-testid="ul-post" className="my-5">
         {posts?.map((post: Post) => (

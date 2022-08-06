@@ -11,7 +11,7 @@ export const Notification: FC = () => {
 
   return (
     <>
-      <p className="mb-4 text-center">Notification</p>
+      <p className="mb-4 text-center">通知</p>
       <NoticeForm />
       <ul data-testid="ul-notice" className="my-5">
         {notices?.map((notice) => (

@@ -1,12 +1,14 @@
-import { PencilAltIcon, TrashIcon, UserCircleIcon } from '@heroicons/react/solid'
+import { ChatAlt2Icon, ExclamationCircleIcon, PencilAltIcon, TrashIcon, UserCircleIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
-import { FC, memo } from 'react'
+import { FC, memo, Suspense, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useMutatePost } from '../../hooks/post/useMutatePost'
 import { useDownloadUrl } from '../../hooks/user/useDownloadUrl'
 import { useQueryAvatar } from '../../hooks/user/useQueryAvatar'
 import useStore from '../../store'
 import { Post } from '../../types'
-import { Spinner } from './Spinner'
+import { Comments } from '../organisms/Comments'
+import { Spinner } from '../atoms/Spinner'
 
 
 export const PostItemMemo: FC<Omit<Post, 'created_at'>> = ({
@@ -20,6 +22,8 @@ export const PostItemMemo: FC<Omit<Post, 'created_at'>> = ({
   const update = useStore((state) => state.updateEditedPost)
   const { data } = useQueryAvatar(user_id)
   const { deletePostMutation } = useMutatePost()
+
+  const [openComments, setOpenComments] = useState(false)
 
   const { fullUrl: avatarUrl, isLoading: isLoadingAvatar } = useDownloadUrl(
     data?.avatar_url,
@@ -88,6 +92,32 @@ export const PostItemMemo: FC<Omit<Post, 'created_at'>> = ({
         <div className="my-3 flex justify-center">
           {(isLoadingAvatar || isLoadingPost) && <Spinner />}
         </div>
+
+        {/* コメント部分 */}
+        <ChatAlt2Icon
+          data-testid="open-comments"
+          className="ml-2 h-6 w-6 cursor-pointer text-blue-500"
+          onClick={() => setOpenComments(!openComments)}
+        />
+        {openComments && (
+          <ErrorBoundary
+            fallback={
+              <ExclamationCircleIcon className="my-5 h-10 w-10 text-pink-500" />
+            }
+          >
+            <Suspense
+              fallback={
+                <div className="flex justify-center">
+                  <Spinner />
+                </div>
+              }
+            >
+              <div className="flex justify-center">
+                <Comments postId={id} />
+              </div>
+            </Suspense>
+          </ErrorBoundary>
+        )}
       </li>
     </>
   )
