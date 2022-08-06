@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { useQueryNotices } from "../../hooks/notice/useQueryNotices"
 import { useSubscribeNotices } from "../../hooks/notice/useSubscribeNotices"
-import { NoticeForm } from "../atoms/NoticeForm"
+import { NoticeForm } from "../molecules/NoticeForm"
 import { NoticeItem } from "../atoms/NoticeItem"
 
 export const Notification: FC = () => {
@@ -11,7 +11,7 @@ export const Notification: FC = () => {
 
   return (
     <>
-      <p className="mb-4 text-center">Notification</p>
+      <p className="mb-4 text-center">通知</p>
       <NoticeForm />
       <ul data-testid="ul-notice" className="my-5">
         {notices?.map((notice) => (

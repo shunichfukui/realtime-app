@@ -7,19 +7,23 @@ import { UserProfile } from '../templates/UserProfile'
 import { useQueryClient } from 'react-query'
 import useStore from '../../store'
 import { Notification } from '../templates/Notification'
+import { Feed } from '../organisms/Feed'
 
 export const DashBoard: FC = () => {
   const queryClient = useQueryClient()
   const resetProfile = useStore((state) => state.resetEditedProfile)
   const resetEditedNotice = useStore((state) => state.resetEditedNotice)
+  const resetEditedPost = useStore((state) => state.resetEditedPost)
 
   const signOut = () => {
     supabase.auth.signOut()
-    // キャッシュクリア
+    // ログアウトの際はキャッシュクリア
     resetProfile()
     resetEditedNotice()
+    resetEditedPost()
     queryClient.invalidateQueries(['profile'])    
     queryClient.invalidateQueries(['notices'])    
+    queryClient.invalidateQueries(['posts'])    
   }
 
   return (
@@ -28,7 +32,7 @@ export const DashBoard: FC = () => {
           className='my-6 h-6 w-6 cursor-pointer text-blue-500'
           onClick={signOut}
         />
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div className='flex flex-col items-center'>
               <ErrorBoundary
                 fallback={
@@ -40,6 +44,19 @@ export const DashBoard: FC = () => {
                   </Suspense>
               </ErrorBoundary>
           </div>
+
+          <div className='flex flex-col w-96 items-center'>
+              <ErrorBoundary
+                fallback={
+                  <ExclamationCircleIcon className="my-5 h-30 w-30 text-pink-500" />
+                }
+              >
+                  <Suspense fallback={<Spinner />}>
+                      <Feed />
+                  </Suspense>
+              </ErrorBoundary>
+          </div>
+
           <div className='flex flex-col items-center'>
             <ErrorBoundary
               fallback={
