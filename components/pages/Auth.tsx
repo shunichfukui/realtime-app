@@ -30,7 +30,7 @@ export const Auth: FC = () => {
             type="text"
             required
             className="my-2 rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none"
-            placeholder="Email"
+            placeholder="メールアドレス"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value)
@@ -42,7 +42,7 @@ export const Auth: FC = () => {
             type="password"
             required
             className="my-2 rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none"
-            placeholder="Password"
+            placeholder="パスワード"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
